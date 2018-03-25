@@ -1,0 +1,18 @@
+$fa-font-path:                "../webfonts";
+
+@import "~@fortawesome/fontawesome-pro-webfonts/scss/fontawesome";
+@import "~@fortawesome/fontawesome-pro-webfonts/scss/fa-regular";
+
+.colorpicker-preview {
+    height: 30px;
+    width: 30px;
+    background-color: white;
+    border: 1px solid rgba(0,0,0,0.4);
+
+    > input {
+
+        height: 100%;
+        width: 100%;
+        opacity: 0;
+    }
+}
