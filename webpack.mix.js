@@ -10,11 +10,10 @@ let mix = require('laravel-mix');
  | file for your application, as well as bundling up your JS files.
  |
  */
-mix.setPublicPath('public');
+mix.setPublicPath('demo');
 
-mix.js('assets/js/app.js', 'public/js')
-    .sass('./assets/sass/app.scss', 'public/css')
-    .copy('assets/public', 'public');
+mix.js('src/wysiwyg.js', 'js/wysiwyg.js')
+    .sass('demo/sass/app.scss', 'demo/css');
 
 // Full API
 // mix.js(src, output);

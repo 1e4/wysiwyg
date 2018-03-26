@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Lightweight WYSIWYG</title>
+
+    <!--Some basic styling-->
+    <link href="/css/app.css" type="text/css" rel="stylesheet">
+
+</head>
+<body>
+
+
+<!--Basic editable example-->
+<!--All editable containers should contain an immediate child div-->
+<div class="editable">
+    <div>This is just some simple text</div>
+</div>
+
+<!--Include the Wysiwyg lib-->
+<script src="/js/wysiwyg.js"></script>
+<script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+        // Pass in class name
+        let editors = new Wysiwyg('editable');
+    });
+</script>
+</body>
+</html>

@@ -152,6 +152,5 @@ class Wysiwyg {
     getInstance() {
         return this.instances;
     }
-}
-
-export default Wysiwyg;
+};
+window.Wysiwyg = Wysiwyg;
