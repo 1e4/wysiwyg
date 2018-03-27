@@ -1,6 +1,6 @@
 {
     "name": "itsawysiwyg",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "description": "A very tiny, highly configurable javascript WYSIWYG editor with zero dependencies",
     "repository": {
         "type": "git",
