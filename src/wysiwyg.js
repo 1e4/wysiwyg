@@ -118,13 +118,6 @@ class Wysiwyg {
                 }
                 else
                     listElement.appendChild(controls);
-
-                //
-                // controls.forEach(function(e)
-                // {
-                //     listElement.appendChild(e);
-                // });
-
             }
 
 
@@ -171,7 +164,6 @@ class Wysiwyg {
 
             button.innerHTML = display;
             button.classList.add('btn');
-
 
             button.addEventListener('click', function (e) {
                 document.execCommand(item.exec, false, tag);
