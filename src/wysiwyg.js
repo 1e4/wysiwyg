@@ -31,24 +31,20 @@ class Wysiwyg {
 
     constructEditor(element) {
 
-        // Set element as editable
         let editor = element.children[0];
 
         this.instances.push(editor);
 
+        // Set element as editable
         editor.setAttribute('contenteditable', true);
 
-        console.log(this.config);
-
         if(this.config.single === true && this.instances.length === 1 || this.config.single === false) {
-
-            //Create a new div to hold the toolbar
             element.prepend(this.addToolbar(editor));
         }
     }
 
     addToolbar(editor) {
-        let editorTemplate = document.createElement('div');
+        let editorTemplate = document.createElement('ul');
 
         // Add a class so we can style it pretty
         editorTemplate.classList.add('wysiwyg-toolbar');
@@ -59,24 +55,57 @@ class Wysiwyg {
         // Loop through the config and insert appropriate controls
         for (let item in this.config.toolbar) {
 
-            let item = this.config.toolbar[item];
+            let currentItem = this.config.toolbar[item];
 
-            switch (item.type) {
-                case 'select':
-                    editorTemplate.appendChild(this.addSelect(item, editor));
-                    break;
-                case 'button':
-                    editorTemplate.appendChild(this.addButton(item));
-                    break;
-                case 'colorpicker':
-                    editorTemplate.append(this.addColorPicker(item));
-                    break;
-                default:
-                    console.error('Invalid item type ' + item.type);
+            let listElement = document.createElement('li');
+
+
+            // Check if a group
+            if(Array.isArray(currentItem))
+            {
+                // Create a new group element
+                let groupTemplate = document.createElement('ul');
+                groupTemplate.classList.add('wysiwyg-control-group');
+
+                for(let aItem in currentItem)
+                {
+                    let nestedItem = currentItem[aItem];
+                    groupTemplate.appendChild(this.createControl(nestedItem));
+                }
+
+                listElement.appendChild(groupTemplate);
             }
+            else
+            {
+                listElement.appendChild(this.createControl(currentItem));
+            }
+
+
+            editorTemplate.prepend(listElement);
         }
 
         return editorTemplate;
+    }
+
+    createControl(item) {
+
+        let controlTemplate = document.createElement('li');
+
+        switch (item.type) {
+            case 'select':
+                controlTemplate.appendChild(this.addSelect(item));
+                break;
+            case 'button':
+                controlTemplate.appendChild(this.addButton(item));
+                break;
+            case 'colorpicker':
+                controlTemplate.appendChild(this.addColorPicker(item));
+                break;
+            default:
+                console.error('Invalid item ' + item);
+        }
+
+        return controlTemplate;
     }
 
     addSelect(item) {
@@ -109,7 +138,10 @@ class Wysiwyg {
     addButton(item) {
         let template = document.createElement('button');
 
-        template.innerHTML = `<i class="${item.icon}"></i> ${item.name}`;
+        template.innerHTML = `${item.icon}`;
+
+        if(this.config.hideName !== true)
+            template.innerHTML += ` ${item.name}`;
 
         template.addEventListener('click', function()
         {
@@ -126,12 +158,13 @@ class Wysiwyg {
 
         template.setAttribute("id", templateId);
         template.classList.add("colorpicker-preview");
+        template.style["backgroundColor"] = '#000';
 
         let inputTemplate = document.createElement("input");
 
         inputTemplate.setAttribute("type", "color");
         inputTemplate.setAttribute("data-preview", templateId);
-        inputTemplate.setAttribute("value", "#000000");
+        inputTemplate.setAttribute("value", "#f00f00");
 
         // Bind color choose event
         inputTemplate.addEventListener("input", function(el) {
