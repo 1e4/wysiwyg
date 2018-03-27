@@ -51,7 +51,19 @@ let defaultConfig = {
                 name: 'Font Color',
                 icon: '<i class="far fa-font"></i>',
                 exec: 'forecolor'
-            }
+            },
+            {
+                type: "button",
+                name: 'SubScript',
+                icon: '<i class="far fa-subscript"></i>',
+                exec: 'subscript'
+            },
+            {
+                type: "button",
+                name: 'Superscript',
+                icon: '<i class="far fa-superscript"></i>',
+                exec: 'superscript'
+            },
         ]
     }
 ;
