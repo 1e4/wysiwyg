@@ -160,7 +160,9 @@ var Wysiwyg = function () {
     }, {
         key: 'addToolbar',
         value: function addToolbar(editor) {
-            var editorTemplate = document.createElement('ul');
+            var _this = this;
+
+            var editorTemplate = document.createElement('div');
 
             // Add a class so we can style it pretty
             editorTemplate.classList.add('wysiwyg-toolbar');
@@ -168,35 +170,67 @@ var Wysiwyg = function () {
             // Make sure the toolbar isn't editable
             editorTemplate.setAttribute('contenteditable', false);
 
+            var ul = document.createElement('ul');
+
+            editorTemplate.appendChild(ul);
+
             // Loop through the config and insert appropriate controls
             for (var item in this.config.toolbar) {
 
-                var currentItem = this.config.toolbar[item];
-
-                var listElement = document.createElement('li');
+                var currentItem = this.config.toolbar[item],
+                    listElement = document.createElement('li');
 
                 // Check if a group
                 if (Array.isArray(currentItem)) {
-                    // Create a new group element
-                    var groupTemplate = document.createElement('ul');
-                    groupTemplate.classList.add('wysiwyg-control-group');
+                    (function () {
+                        // Create a new group element
+                        var groupTemplate = document.createElement('ul'),
+                            listTemplate = document.createElement('li');
 
-                    for (var aItem in currentItem) {
-                        var nestedItem = currentItem[aItem];
-                        groupTemplate.appendChild(this.createControl(nestedItem));
-                    }
+                        groupTemplate.classList.add('wysiwyg-control-group');
 
-                    listElement.appendChild(groupTemplate);
+                        for (var aItem in currentItem) {
+                            var nestedItem = currentItem[aItem],
+                                controls = _this.createControl(nestedItem);
+
+                            for (var key in controls) {
+                                listElement.appendChild(controls[key]);
+                            }
+
+                            controls.forEach(function (e) {
+                                listTemplate.appendChild(e);
+                            });
+                        }
+
+                        groupTemplate.append(listTemplate);
+
+                        listElement.appendChild(groupTemplate);
+                    })();
                 } else {
 
                     if (currentItem.type === 'select') {
                         listElement.innerHTML = currentItem.name;
+                        listElement.classList.add('has-drop-down');
                     }
 
-                    listElement.appendChild(this.createControl(currentItem));
+                    var controls = this.createControl(currentItem);
+
+                    console.log('controls', controls);
+
+                    if (Array.isArray(controls)) {
+                        for (var key in controls) {
+                            listElement.appendChild(controls[key]);
+                        }
+                    } else listElement.appendChild(controls);
+
+                    //
+                    // controls.forEach(function(e)
+                    // {
+                    //     listElement.appendChild(e);
+                    // });
                 }
 
-                editorTemplate.prepend(listElement);
+                ul.append(listElement);
             }
 
             return editorTemplate;
@@ -230,32 +264,42 @@ var Wysiwyg = function () {
             for (var tag in item.options) {
                 var display = item.options[tag];
 
-                var optionHtml = document.createElement('li');
-                optionHtml.value = tag;
-                optionHtml.innerHTML = display;
+                var optionHtml = document.createElement('li'),
+                    button = document.createElement('div');
+                button.dataTag = tag;
+                button.innerHTML = display;
+                button.classList.add('btn');
+
+                button.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.execCommand(item.exec, false, this.value);
+                    this.selectedIndex = 0;
+                });
+
+                optionHtml.append(button);
 
                 template.appendChild(optionHtml);
             }
-
-            template.addEventListener('click', function () {
-                document.execCommand(item.exec, false, this.value);
-                this.selectedIndex = 0;
-            });
 
             return template;
         }
     }, {
         key: 'addButton',
         value: function addButton(item) {
-            var template = document.createElement('button');
+            var events = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+
+            var template = document.createElement('div');
+            template.classList.add('btn');
 
             template.innerHTML = '' + item.icon;
 
             if (this.config.hideName !== true) template.innerHTML += ' ' + item.name;
 
-            template.addEventListener('click', function () {
-                document.execCommand(item.exec, false, this.value);
-            });
+            if (events) {
+                template.addEventListener('click', function (e) {
+                    document.execCommand(item.exec, false, this.value);
+                });
+            }
 
             return template;
         }
@@ -264,11 +308,11 @@ var Wysiwyg = function () {
         value: function addColorPicker(item) {
             // Create the container
             var template = document.createElement('div'),
-                templateId = this.generateId();
+                templateId = this.generateId(),
+                buttonTemplate = this.addButton(item, false);
 
             template.setAttribute("id", templateId);
             template.classList.add("colorpicker-preview");
-            template.style["backgroundColor"] = '#f00f00';
 
             var inputTemplate = document.createElement("input");
 
@@ -279,15 +323,14 @@ var Wysiwyg = function () {
             });
 
             // Bind color choose event
-            inputTemplate.addEventListener("input", function (el) {
-                console.log(template);
-                template.style["background-color"] = this.value;
+            inputTemplate.addEventListener("input", function (e) {
+                buttonTemplate.children[0].style["color"] = this.value;
                 document.execCommand(item.exec, false, this.value);
             });
 
             template.appendChild(inputTemplate);
 
-            return template;
+            return [buttonTemplate, template];
         }
     }, {
         key: 'generateId',
@@ -326,7 +369,7 @@ var defaultConfig = {
     hideName: true,
     toolbar: [{
         type: "select",
-        name: "Header Formatting",
+        name: "Header Formatting <span class='arrow-right'><i class='far fa-chevron-down'></i></span>",
         exec: 'formatblock',
         options: {
             h1: 'Heading 1',
@@ -339,7 +382,7 @@ var defaultConfig = {
         }
     }, {
         type: "select",
-        name: "Font Size",
+        name: "Font Size <span class='arrow-right'><i class='far fa-chevron-down'></i></span>",
         exec: 'fontsize',
         options: {
             1: 'Very Small',
@@ -347,25 +390,25 @@ var defaultConfig = {
             3: 'Medium',
             4: 'Large'
         }
-    }, [{
+    }, {
         type: "button",
         name: 'Bold',
-        icon: 'far fa-bold',
+        icon: '<i class="far fa-bold"></i>',
         exec: 'bold'
     }, {
         type: "button",
         name: 'Italic',
-        icon: 'far fa-italic',
+        icon: '<i class="far fa-italic"></i>',
         exec: 'italic'
     }, {
         type: "button",
         name: 'Underline',
-        icon: 'far fa-underline',
+        icon: '<i class="far fa-underline"></i>',
         exec: 'underline'
-    }], {
+    }, {
         type: "colorpicker",
         name: 'Font Color',
-        icon: '',
+        icon: '<i class="far fa-font"></i>',
         exec: 'forecolor'
     }]
 };

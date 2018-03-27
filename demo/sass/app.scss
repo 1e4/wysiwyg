@@ -3,21 +3,10 @@ $fa-font-path: "../webfonts";
 @import "~@fortawesome/fontawesome-pro-webfonts/scss/fontawesome";
 @import "~@fortawesome/fontawesome-pro-webfonts/scss/fa-regular";
 
-.colorpicker-preview {
-    background-color: white;
-    border: 1px solid rgba(0, 0, 0, 0.4);
-
-    > input {
-
-        height: 100%;
-        width: 100%;
-        opacity: 0;
-    }
-}
-
 body.wysiwyg-single {
-    padding-top: 50px;
-    ul.wysiwyg-toolbar {
+    padding-top: 60px;
+
+    div.wysiwyg-toolbar {
         position: absolute;
         top: 0;
         left: 0;
@@ -25,38 +14,124 @@ body.wysiwyg-single {
     }
 }
 
-ul.wysiwyg-toolbar {
-    margin: 0;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    background-color: #e9eee4;
+div.wysiwyg-toolbar {
+    background-color: #eaeaea;
+    font: 13px Arial, sans-serif;
+    height: 60px;
 
-    li {
-        height: 100%;
+    ul {
+        margin: 0;
+        padding: 0;
         display: inline-block;
-        padding: 5px;
 
-        &:hover {
-            ul.drop-down {
-                z-index: 5;
-                opacity: 1;
+        > li {
+            display: inline-block;
+            position: relative;
+            cursor: pointer;
+
+            &:hover {
+                background: rgba(0, 0, 0, 0.1);
+
+                ul.drop-down {
+                    z-index: 5;
+                    opacity: 1;
+                    display: flex;
+                }
             }
-        }
 
-        ul {
-            margin: 0;
-            padding: 0;
+            button {
+                border: 0;
+                background: transparent;
+                cursor: pointer;
 
-            &.drop-down {
+                &::after {
+                    content: " ";
+                    display: block;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: transparent;
+                }
+            }
 
-                opacity: 0;
-                transition: all ease-in-out 0.2s;
-                z-index: -1;
+            .colorpicker-preview {
                 position: absolute;
-                display: flex;
-                flex-direction: column;
+                height: 100%;
+                width: 100%;
+                left: 0;
+                top: 0;
+
+                > input {
+                    height: 100%;
+                    width: 100%;
+                    //opacity: 0;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    padding: 0;
+                    border: 0;
+                    opacity: 0;
+                }
+            }
+
+            &.has-drop-down {
+                padding: 20px 60px 20px 20px;
+
+                .arrow-right {
+                    position: absolute;
+                    right: 30px;
+                    top: 20px;
+                }
+
+                &:hover {
+
+                    > ul.drop-down {
+                        display: flex;
+                        opacity: 1;
+                        z-index: 5;
+                    }
+                }
+
+                ul {
+
+                    &.drop-down {
+                        display: none;
+                        opacity: 0;
+                        transition: all ease-in-out 0.2s;
+                        z-index: -1;
+                        flex-direction: column;
+                        background: #eaeaea;
+                        left: 0;
+                        top: 100%;
+                        position: absolute;
+                        min-width: 150%;
+
+                        li {
+                            padding: 10px 60px 10px 10px;
+
+                            &:hover {
+                                background: rgba(0, 0, 0, 0.1);
+                                cursor: pointer;
+                            }
+
+                            button {
+
+                            }
+                        }
+                    }
+                }
             }
         }
     }
+
+    li {
+        list-style: none;
+    }
+
+    div.btn {
+        padding: 20px 10px;
+    }
+
 }

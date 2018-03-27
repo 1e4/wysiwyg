@@ -5,7 +5,7 @@ let defaultConfig = {
         toolbar: [
             {
                 type: "select",
-                name: "Header Formatting",
+                name: "Header Formatting <span class='arrow-right'><i class='far fa-chevron-down'></i></span>",
                 exec: 'formatblock',
                 options: {
                     h1: 'Heading 1',
@@ -19,7 +19,7 @@ let defaultConfig = {
             },
             {
                 type: "select",
-                name: "Font Size",
+                name: "Font Size <span class='arrow-right'><i class='far fa-chevron-down'></i></span>",
                 exec: 'fontsize',
                 options: {
                     1: 'Very Small',
@@ -28,31 +28,28 @@ let defaultConfig = {
                     4: 'Large',
                 }
             },
-            [
-
-                {
-                    type: "button",
-                    name: 'Bold',
-                    icon: 'far fa-bold',
-                    exec: 'bold'
-                },
-                {
-                    type: "button",
-                    name: 'Italic',
-                    icon: 'far fa-italic',
-                    exec: 'italic'
-                },
-                {
-                    type: "button",
-                    name: 'Underline',
-                    icon: 'far fa-underline',
-                    exec: 'underline'
-                },
-            ],
+            {
+                type: "button",
+                name: 'Bold',
+                icon: '<i class="far fa-bold"></i>',
+                exec: 'bold'
+            },
+            {
+                type: "button",
+                name: 'Italic',
+                icon: '<i class="far fa-italic"></i>',
+                exec: 'italic'
+            },
+            {
+                type: "button",
+                name: 'Underline',
+                icon: '<i class="far fa-underline"></i>',
+                exec: 'underline'
+            },
             {
                 type: "colorpicker",
                 name: 'Font Color',
-                icon: '',
+                icon: '<i class="far fa-font"></i>',
                 exec: 'forecolor'
             }
         ]
