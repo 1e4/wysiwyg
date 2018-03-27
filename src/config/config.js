@@ -1,3 +1,7 @@
+// If you want to use an icon set such as font awesome then you will need to add the dependencies
+//        "@fortawesome/fontawesome": "^1.1.4",
+//        "@fortawesome/fontawesome-pro-webfonts": "^1.0.4",
+
 let defaultConfig = {
         single: true,
         container: 'body',

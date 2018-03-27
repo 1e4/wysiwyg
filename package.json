@@ -1,6 +1,6 @@
 {
     "name": "itsawysiwyg",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "description": "A very tiny, highly configurable javascript WYSIWYG editor with zero dependencies",
     "repository": {
         "type": "git",
@@ -31,8 +31,6 @@
         "laravel-mix": "^2.0"
     },
     "dependencies": {
-        "@fortawesome/fontawesome": "^1.1.4",
-        "@fortawesome/fontawesome-pro-webfonts": "^1.0.4",
         "collect.js": "^4.0.12"
     }
 }
