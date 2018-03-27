@@ -1,18 +1,62 @@
-$fa-font-path:                "../webfonts";
+$fa-font-path: "../webfonts";
 
 @import "~@fortawesome/fontawesome-pro-webfonts/scss/fontawesome";
 @import "~@fortawesome/fontawesome-pro-webfonts/scss/fa-regular";
 
 .colorpicker-preview {
-    height: 30px;
-    width: 30px;
     background-color: white;
-    border: 1px solid rgba(0,0,0,0.4);
+    border: 1px solid rgba(0, 0, 0, 0.4);
 
     > input {
 
         height: 100%;
         width: 100%;
         opacity: 0;
+    }
+}
+
+body.wysiwyg-single {
+    padding-top: 50px;
+    ul.wysiwyg-toolbar {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+    }
+}
+
+ul.wysiwyg-toolbar {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    background-color: #e9eee4;
+
+    li {
+        height: 100%;
+        display: inline-block;
+        padding: 5px;
+
+        &:hover {
+            ul.drop-down {
+                z-index: 5;
+                opacity: 1;
+            }
+        }
+
+        ul {
+            margin: 0;
+            padding: 0;
+
+            &.drop-down {
+
+                opacity: 0;
+                transition: all ease-in-out 0.2s;
+                z-index: -1;
+                position: absolute;
+                display: flex;
+                flex-direction: column;
+            }
+        }
     }
 }

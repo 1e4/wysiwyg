@@ -4458,8 +4458,6 @@ readers do not read off random characters that represent icons */
 }
 
 .colorpicker-preview {
-  height: 30px;
-  width: 30px;
   background-color: white;
   border: 1px solid rgba(0, 0, 0, 0.4);
 }
@@ -4468,5 +4466,59 @@ readers do not read off random characters that represent icons */
   height: 100%;
   width: 100%;
   opacity: 0;
+}
+
+body.wysiwyg-single {
+  padding-top: 50px;
+}
+
+body.wysiwyg-single ul.wysiwyg-toolbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+ul.wysiwyg-toolbar {
+  margin: 0;
+  padding: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: #e9eee4;
+}
+
+ul.wysiwyg-toolbar li {
+  height: 100%;
+  display: inline-block;
+  padding: 5px;
+}
+
+ul.wysiwyg-toolbar li:hover ul.drop-down {
+  z-index: 5;
+  opacity: 1;
+}
+
+ul.wysiwyg-toolbar li ul {
+  margin: 0;
+  padding: 0;
+}
+
+ul.wysiwyg-toolbar li ul.drop-down {
+  opacity: 0;
+  -webkit-transition: all ease-in-out 0.2s;
+  transition: all ease-in-out 0.2s;
+  z-index: -1;
+  position: absolute;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 

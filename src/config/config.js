@@ -1,5 +1,6 @@
 let defaultConfig = {
         single: true,
+        container: 'body',
         hideName: true,
         toolbar: [
             {

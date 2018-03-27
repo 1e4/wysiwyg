@@ -39,7 +39,21 @@ class Wysiwyg {
         editor.setAttribute('contenteditable', true);
 
         if(this.config.single === true && this.instances.length === 1 || this.config.single === false) {
-            element.prepend(this.addToolbar(editor));
+            if(this.config.single === true && this.config.container !== undefined)
+            {
+                let container = document.getElementById(this.config.container);
+
+                container
+                    .classList
+                    .add('wysiwyg-single');
+
+                container
+                    .prepend(this.addToolbar(editor));
+            }
+            else
+            {
+                element.prepend(this.addToolbar(editor));
+            }
         }
     }
 
@@ -59,7 +73,6 @@ class Wysiwyg {
 
             let listElement = document.createElement('li');
 
-
             // Check if a group
             if(Array.isArray(currentItem))
             {
@@ -77,6 +90,12 @@ class Wysiwyg {
             }
             else
             {
+
+                if(currentItem.type === 'select')
+                {
+                    listElement.innerHTML = currentItem.name;
+                }
+
                 listElement.appendChild(this.createControl(currentItem));
             }
 
@@ -88,45 +107,39 @@ class Wysiwyg {
     }
 
     createControl(item) {
-
-        let controlTemplate = document.createElement('li');
-
         switch (item.type) {
             case 'select':
-                controlTemplate.appendChild(this.addSelect(item));
-                break;
+                return this.addSelect(item);
             case 'button':
-                controlTemplate.appendChild(this.addButton(item));
-                break;
+                return this.addButton(item);
             case 'colorpicker':
-                controlTemplate.appendChild(this.addColorPicker(item));
-                break;
+                return this.addColorPicker(item);
             default:
                 console.error('Invalid item ' + item);
+                break;
         }
-
-        return controlTemplate;
     }
 
     addSelect(item) {
-        let template = document.createElement('select');
+        let template = document.createElement('ul');
+        this.setAttrs(template, {
+            'class': 'drop-down'
+        });
 
-        let defaultOption = document.createElement('option');
+        let defaultOption = document.createElement('li');
         defaultOption.innerHTML = item.name;
-
-        template.appendChild(defaultOption);
 
         for(let tag in item.options) {
             let display = item.options[tag];
 
-            let optionHtml = document.createElement('option');
+            let optionHtml = document.createElement('li');
             optionHtml.value = tag;
             optionHtml.innerHTML = display;
 
             template.appendChild(optionHtml);
         }
 
-        template.addEventListener('change', function()
+        template.addEventListener('click', function()
         {
             document.execCommand(item.exec, false, this.value);
             this.selectedIndex = 0;
@@ -158,13 +171,15 @@ class Wysiwyg {
 
         template.setAttribute("id", templateId);
         template.classList.add("colorpicker-preview");
-        template.style["backgroundColor"] = '#000';
+        template.style["backgroundColor"] = '#f00f00';
 
         let inputTemplate = document.createElement("input");
 
-        inputTemplate.setAttribute("type", "color");
-        inputTemplate.setAttribute("data-preview", templateId);
-        inputTemplate.setAttribute("value", "#f00f00");
+        this.setAttrs(inputTemplate, {
+            type: 'color',
+            "data-preview": templateId,
+            value: "#f00f00"
+        });
 
         // Bind color choose event
         inputTemplate.addEventListener("input", function(el) {
@@ -180,6 +195,13 @@ class Wysiwyg {
 
     generateId() {
         return "_" + Math.random().toString(36).substr(2, 9);
+    }
+
+    setAttrs(el, attr) {
+        for (let key in attr)
+        {
+            el.setAttribute(key, attr[key]);
+        }
     }
 
     getInstance() {

@@ -146,7 +146,15 @@ var Wysiwyg = function () {
             editor.setAttribute('contenteditable', true);
 
             if (this.config.single === true && this.instances.length === 1 || this.config.single === false) {
-                element.prepend(this.addToolbar(editor));
+                if (this.config.single === true && this.config.container !== undefined) {
+                    var container = document.getElementById(this.config.container);
+
+                    container.classList.add('wysiwyg-single');
+
+                    container.prepend(this.addToolbar(editor));
+                } else {
+                    element.prepend(this.addToolbar(editor));
+                }
             }
         }
     }, {
@@ -180,6 +188,11 @@ var Wysiwyg = function () {
 
                     listElement.appendChild(groupTemplate);
                 } else {
+
+                    if (currentItem.type === 'select') {
+                        listElement.innerHTML = currentItem.name;
+                    }
+
                     listElement.appendChild(this.createControl(currentItem));
                 }
 
@@ -191,46 +204,40 @@ var Wysiwyg = function () {
     }, {
         key: 'createControl',
         value: function createControl(item) {
-
-            var controlTemplate = document.createElement('li');
-
             switch (item.type) {
                 case 'select':
-                    controlTemplate.appendChild(this.addSelect(item));
-                    break;
+                    return this.addSelect(item);
                 case 'button':
-                    controlTemplate.appendChild(this.addButton(item));
-                    break;
+                    return this.addButton(item);
                 case 'colorpicker':
-                    controlTemplate.appendChild(this.addColorPicker(item));
-                    break;
+                    return this.addColorPicker(item);
                 default:
                     console.error('Invalid item ' + item);
+                    break;
             }
-
-            return controlTemplate;
         }
     }, {
         key: 'addSelect',
         value: function addSelect(item) {
-            var template = document.createElement('select');
+            var template = document.createElement('ul');
+            this.setAttrs(template, {
+                'class': 'drop-down'
+            });
 
-            var defaultOption = document.createElement('option');
+            var defaultOption = document.createElement('li');
             defaultOption.innerHTML = item.name;
-
-            template.appendChild(defaultOption);
 
             for (var tag in item.options) {
                 var display = item.options[tag];
 
-                var optionHtml = document.createElement('option');
+                var optionHtml = document.createElement('li');
                 optionHtml.value = tag;
                 optionHtml.innerHTML = display;
 
                 template.appendChild(optionHtml);
             }
 
-            template.addEventListener('change', function () {
+            template.addEventListener('click', function () {
                 document.execCommand(item.exec, false, this.value);
                 this.selectedIndex = 0;
             });
@@ -261,13 +268,15 @@ var Wysiwyg = function () {
 
             template.setAttribute("id", templateId);
             template.classList.add("colorpicker-preview");
-            template.style["backgroundColor"] = '#000';
+            template.style["backgroundColor"] = '#f00f00';
 
             var inputTemplate = document.createElement("input");
 
-            inputTemplate.setAttribute("type", "color");
-            inputTemplate.setAttribute("data-preview", templateId);
-            inputTemplate.setAttribute("value", "#f00f00");
+            this.setAttrs(inputTemplate, {
+                type: 'color',
+                "data-preview": templateId,
+                value: "#f00f00"
+            });
 
             // Bind color choose event
             inputTemplate.addEventListener("input", function (el) {
@@ -284,6 +293,13 @@ var Wysiwyg = function () {
         key: 'generateId',
         value: function generateId() {
             return "_" + Math.random().toString(36).substr(2, 9);
+        }
+    }, {
+        key: 'setAttrs',
+        value: function setAttrs(el, attr) {
+            for (var key in attr) {
+                el.setAttribute(key, attr[key]);
+            }
         }
     }, {
         key: 'getInstance',
@@ -306,6 +322,7 @@ window.Wysiwyg = Wysiwyg;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return defaultConfig; });
 var defaultConfig = {
     single: true,
+    container: 'body',
     hideName: true,
     toolbar: [{
         type: "select",
