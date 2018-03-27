@@ -253,6 +253,8 @@ var Wysiwyg = function () {
     }, {
         key: 'addSelect',
         value: function addSelect(item) {
+            var _this2 = this;
+
             var template = document.createElement('ul');
             this.setAttrs(template, {
                 'class': 'drop-down'
@@ -261,24 +263,33 @@ var Wysiwyg = function () {
             var defaultOption = document.createElement('li');
             defaultOption.innerHTML = item.name;
 
-            for (var tag in item.options) {
+            var _loop = function _loop(tag) {
                 var display = item.options[tag];
 
                 var optionHtml = document.createElement('li'),
-                    button = document.createElement('div');
-                button.dataTag = tag;
+                    button = document.createElement('a');
+
+                button.setAttribute('href', 'javascript:void(0)');
+
+                _this2.setAttrs(button, {
+                    href: 'javascript:void(0)'
+                });
+
                 button.innerHTML = display;
                 button.classList.add('btn');
 
                 button.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    document.execCommand(item.exec, false, this.value);
+                    document.execCommand(item.exec, false, tag);
                     this.selectedIndex = 0;
                 });
 
                 optionHtml.append(button);
 
                 template.appendChild(optionHtml);
+            };
+
+            for (var tag in item.options) {
+                _loop(tag);
             }
 
             return template;
@@ -288,8 +299,9 @@ var Wysiwyg = function () {
         value: function addButton(item) {
             var events = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
 
-            var template = document.createElement('div');
+            var template = document.createElement('a');
             template.classList.add('btn');
+            template.setAttribute('href', 'javascript:void(0)');
 
             template.innerHTML = '' + item.icon;
 
@@ -297,7 +309,9 @@ var Wysiwyg = function () {
 
             if (events) {
                 template.addEventListener('click', function (e) {
+                    e.preventDefault();
                     document.execCommand(item.exec, false, this.value);
+                    console.log('clicked');
                 });
             }
 
@@ -307,11 +321,15 @@ var Wysiwyg = function () {
         key: 'addColorPicker',
         value: function addColorPicker(item) {
             // Create the container
-            var template = document.createElement('div'),
+            var template = document.createElement('a'),
                 templateId = this.generateId(),
                 buttonTemplate = this.addButton(item, false);
 
-            template.setAttribute("id", templateId);
+            this.setAttrs(template, {
+                id: templateId,
+                href: 'javascript:void(0)'
+            });
+
             template.classList.add("colorpicker-preview");
 
             var inputTemplate = document.createElement("input");

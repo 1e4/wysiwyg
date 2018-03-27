@@ -161,14 +161,20 @@ class Wysiwyg {
             let display = item.options[tag];
 
             let optionHtml = document.createElement('li'),
-                button = document.createElement('div');
-            button.dataTag = tag;
+                button = document.createElement('a');
+
+            button.setAttribute('href', 'javascript:void(0)');
+
+            this.setAttrs(button, {
+                href: 'javascript:void(0)',
+            });
+
             button.innerHTML = display;
             button.classList.add('btn');
 
+
             button.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.execCommand(item.exec, false, this.value);
+                document.execCommand(item.exec, false, tag);
                 this.selectedIndex = 0;
             });
 
@@ -182,8 +188,9 @@ class Wysiwyg {
     }
 
     addButton(item, events = true) {
-        let template = document.createElement('div');
+        let template = document.createElement('a');
         template.classList.add('btn');
+        template.setAttribute('href', 'javascript:void(0)');
 
         template.innerHTML = `${item.icon}`;
 
@@ -192,7 +199,9 @@ class Wysiwyg {
 
         if (events) {
             template.addEventListener('click', function (e) {
+                e.preventDefault();
                 document.execCommand(item.exec, false, this.value);
+                console.log('clicked');
             });
         }
 
@@ -201,11 +210,15 @@ class Wysiwyg {
 
     addColorPicker(item) {
         // Create the container
-        let template = document.createElement('div'),
+        let template = document.createElement('a'),
             templateId = this.generateId(),
             buttonTemplate = this.addButton(item, false);
 
-        template.setAttribute("id", templateId);
+        this.setAttrs(template, {
+            id: templateId,
+            href: 'javascript:void(0)'
+        });
+
         template.classList.add("colorpicker-preview");
 
         let inputTemplate = document.createElement("input");

@@ -4471,7 +4471,6 @@ body.wysiwyg-single div.wysiwyg-toolbar {
 div.wysiwyg-toolbar {
   background-color: #eaeaea;
   font: 13px Arial, sans-serif;
-  height: 60px;
 }
 
 div.wysiwyg-toolbar ul {
@@ -4480,10 +4479,15 @@ div.wysiwyg-toolbar ul {
   display: inline-block;
 }
 
+div.wysiwyg-toolbar ul a {
+  padding: 22px;
+  display: block;
+  color: #000;
+}
+
 div.wysiwyg-toolbar ul > li {
   display: inline-block;
   position: relative;
-  cursor: pointer;
 }
 
 div.wysiwyg-toolbar ul > li:hover {
@@ -4496,23 +4500,6 @@ div.wysiwyg-toolbar ul > li:hover ul.drop-down {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-}
-
-div.wysiwyg-toolbar ul > li button {
-  border: 0;
-  background: transparent;
-  cursor: pointer;
-}
-
-div.wysiwyg-toolbar ul > li button::after {
-  content: " ";
-  display: block;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: transparent;
 }
 
 div.wysiwyg-toolbar ul > li .colorpicker-preview {
@@ -4535,7 +4522,7 @@ div.wysiwyg-toolbar ul > li .colorpicker-preview > input {
 }
 
 div.wysiwyg-toolbar ul > li.has-drop-down {
-  padding: 20px 60px 20px 20px;
+  padding: 22px 60px 22px 20px;
 }
 
 div.wysiwyg-toolbar ul > li.has-drop-down .arrow-right {
