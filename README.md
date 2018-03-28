@@ -37,7 +37,7 @@ NPM
 
 A step by step series of examples that tell you have to get a development env running
 
-Say what the step will be
+#### Including in your own project
 
 ```
 $ npm install itsawysiwyg
@@ -49,13 +49,16 @@ Or optionally if you use Yarn
 $ yarn add itsawysiwyg
 ```
 
-To serve the demo application run 
+#### Running the demo
 
 ```
-$ npm run hot
+$ git clone https://github.com/1e4/itsawysiwyg
+$ cd itsawysiwyg
+$ yarn
+$ yarn run hot
 ```
 
-This uses webpacks builtin web server, head over to the URL it lists, by default it is `http://localhost:8080`
+This uses webpacks built in web server, head over to the URL it lists, by default it is `http://localhost:8080`
 
 ## Running the tests
 

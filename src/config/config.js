@@ -1,15 +1,11 @@
-// If you want to use an icon set such as font awesome then you will need to add the dependencies
-//        "@fortawesome/fontawesome": "^1.1.4",
-//        "@fortawesome/fontawesome-pro-webfonts": "^1.0.4",
-
 let defaultConfig = {
         single: true,
         container: 'body',
-        hideName: true,
+        hideName: false,
         toolbar: [
             {
                 type: "select",
-                name: "Header Formatting <span class='arrow-right'><i class='far fa-chevron-down'></i></span>",
+                name: "Header Formatting",
                 exec: 'formatblock',
                 options: {
                     h1: 'Heading 1',
@@ -23,7 +19,7 @@ let defaultConfig = {
             },
             {
                 type: "select",
-                name: "Font Size <span class='arrow-right'><i class='far fa-chevron-down'></i></span>",
+                name: "Font Size",
                 exec: 'fontsize',
                 options: {
                     1: 'Very Small',
@@ -35,37 +31,37 @@ let defaultConfig = {
             {
                 type: "button",
                 name: 'Bold',
-                icon: '<i class="far fa-bold"></i>',
+                icon: '',
                 exec: 'bold'
             },
             {
                 type: "button",
                 name: 'Italic',
-                icon: '<i class="far fa-italic"></i>',
+                icon: '',
                 exec: 'italic'
             },
             {
                 type: "button",
                 name: 'Underline',
-                icon: '<i class="far fa-underline"></i>',
+                icon: '',
                 exec: 'underline'
             },
             {
                 type: "colorpicker",
                 name: 'Font Color',
-                icon: '<i class="far fa-font"></i>',
+                icon: '',
                 exec: 'forecolor'
             },
             {
                 type: "button",
                 name: 'SubScript',
-                icon: '<i class="far fa-subscript"></i>',
+                icon: '',
                 exec: 'subscript'
             },
             {
                 type: "button",
                 name: 'Superscript',
-                icon: '<i class="far fa-superscript"></i>',
+                icon: '',
                 exec: 'superscript'
             },
         ]

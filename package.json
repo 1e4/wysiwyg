@@ -1,6 +1,6 @@
 {
     "name": "itsawysiwyg",
-    "version": "0.1.2",
+    "version": "0.1.3",
     "description": "A very tiny, highly configurable javascript WYSIWYG editor with zero dependencies",
     "repository": {
         "type": "git",
@@ -29,8 +29,5 @@
     "devDependencies": {
         "cross-env": "^5.1",
         "laravel-mix": "^2.0"
-    },
-    "dependencies": {
-        "collect.js": "^4.0.12"
     }
 }
