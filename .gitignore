@@ -1,6 +1,7 @@
-.idea
-node_modules
+/.idea
+/node_modules
 /public
 yarn-error.log
 /demo/hot
 /demo/mix-manifest.json
+/src/config/customConfig.js
