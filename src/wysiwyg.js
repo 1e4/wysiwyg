@@ -2,12 +2,18 @@ import {defaultConfig} from './config/config';
 
 class Wysiwyg {
     constructor(el, config) {
-
         // Merge our and their config
         this.config = Object.assign(defaultConfig, config);
 
+        this.el = el;
+
         // Get all the elements attached to this instance
-        this.elements = document.getElementsByClassName(el);
+        if(el.startsWith('.'))
+            this.elements = document.getElementsByClassName(el.replace('.', ''));
+        else if(el.startsWith('#'))
+            this.elements = document.getElementById(el.replace('#', ''));
+        else
+            this.elements = document.getElementsByTagName(el);
 
         this.instances = [];
 
@@ -18,15 +24,20 @@ class Wysiwyg {
 
         let elements = this.elements;
 
+        if(this.el.startsWith('#'))
+        {
+            this.constructEditor(elements);
+            return;
+        }
+
         if (elements.length === 0) {
+            console.error('No elements found with ' + this.el);
             return;
         }
 
         for (let item of elements) {
             this.constructEditor(item);
         }
-
-
     }
 
     constructEditor(element) {
@@ -108,8 +119,6 @@ class Wysiwyg {
                 }
 
                 let controls = this.createControl(currentItem);
-
-                console.log('controls', controls);
 
                 if (Array.isArray(controls)) {
                     for (let key in controls) {
@@ -193,7 +202,6 @@ class Wysiwyg {
             template.addEventListener('click', function (e) {
                 e.preventDefault();
                 document.execCommand(item.exec, false, this.value);
-                console.log('clicked');
             });
         }
 
@@ -244,6 +252,22 @@ class Wysiwyg {
 
     getInstance() {
         return this.instances;
+    }
+
+    getContent() {
+        return this.instances.map(function(value)
+        {
+
+            let id = value.id,
+                obj = {};
+
+            if(!id)
+                return console.error('Invalid id');
+
+            obj[id] = value.innerHTML;
+
+            return obj;
+        }, this);
     }
 };
 window.Wysiwyg = Wysiwyg;

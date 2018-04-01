@@ -17,16 +17,50 @@
 <!--Basic editable example-->
 <!--All editable containers should contain an immediate child div-->
 <div class="editable">
-    <div>This is just some simple text</div>
+    <div id="test1">This is just some simple text</div>
+</div>
+
+<div class="editable" id="editableIdTest">
+    <div id="test2">This is just another simple text area</div>
+</div>
+
+<div>
+    <p>
+        This is an example of the getContent() API method
+    </p>
+
+    <code id="getContent-demo">
+
+    </code>
+
+    <p>
+        <button id="refresh-getContent">getContent()</button>
+    </p>
 </div>
 
 <!--Include the Wysiwyg lib-->
 <script src="/js/wysiwyg.js"></script>
 <script type="text/javascript">
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         // Pass in class name
-        let editors = new Wysiwyg('editable');
+        window.currentEditors = new Wysiwyg('#editableIdTest');
+        let refreshButton = document.getElementById('refresh-getContent');
+
+        updateContent();
+
+        refreshButton.addEventListener('click', updateContent);
     });
+
+    function updateContent() {
+
+        let contents = window.currentEditors.getContent();
+
+        let content = document.getElementById('getContent-demo');
+
+        contents = JSON.stringify(contents);
+
+        content.innerText = contents;
+    }
 </script>
 </body>
 </html>
