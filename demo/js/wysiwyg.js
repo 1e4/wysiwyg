@@ -364,7 +364,17 @@ var Wysiwyg = function () {
     }, {
         key: 'getContent',
         value: function getContent() {
-            return this.instances.length === 1 ? this.instances.innerHTML : this.instances;
+            return this.instances.length === 1 ? this.instances[0].innerHTML : this.instances.map(function (value) {
+
+                var id = value.id,
+                    obj = {};
+
+                if (!id) return console.error('Invalid id');
+
+                obj[id] = value.innerHTML;
+
+                return obj;
+            }, this);
         }
     }]);
 
