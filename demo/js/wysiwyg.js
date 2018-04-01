@@ -91,8 +91,10 @@ var Wysiwyg = function () {
         // Merge our and their config
         this.config = Object.assign(__WEBPACK_IMPORTED_MODULE_0__config_config__["a" /* defaultConfig */], config);
 
+        this.el = el;
+
         // Get all the elements attached to this instance
-        this.elements = document.getElementsByClassName(el);
+        if (el.startsWith('.')) this.elements = document.getElementsByClassName(el.replace('.', ''));else if (el.startsWith('#')) this.elements = document.getElementById(el.replace('#', ''));else this.elements = document.getElementsByTagName(el);
 
         this.instances = [];
 
@@ -105,7 +107,13 @@ var Wysiwyg = function () {
 
             var elements = this.elements;
 
+            if (this.el.startsWith('#')) {
+                this.constructEditor(elements);
+                return;
+            }
+
             if (elements.length === 0) {
+                console.error('No elements found with ' + this.el);
                 return;
             }
 
@@ -133,8 +141,6 @@ var Wysiwyg = function () {
                     }
                 }
             }
-
-            console.log('instances', this.instances);
         }
     }, {
         key: 'constructEditor',
@@ -305,7 +311,6 @@ var Wysiwyg = function () {
                 template.addEventListener('click', function (e) {
                     e.preventDefault();
                     document.execCommand(item.exec, false, this.value);
-                    console.log('clicked');
                 });
             }
 
@@ -364,7 +369,7 @@ var Wysiwyg = function () {
     }, {
         key: 'getContent',
         value: function getContent() {
-            return this.instances.length === 1 ? this.instances[0].innerHTML : this.instances.map(function (value) {
+            return this.instances.map(function (value) {
 
                 var id = value.id,
                     obj = {};

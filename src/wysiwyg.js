@@ -5,8 +5,15 @@ class Wysiwyg {
         // Merge our and their config
         this.config = Object.assign(defaultConfig, config);
 
+        this.el = el;
+
         // Get all the elements attached to this instance
-        this.elements = document.getElementsByClassName(el);
+        if(el.startsWith('.'))
+            this.elements = document.getElementsByClassName(el.replace('.', ''));
+        else if(el.startsWith('#'))
+            this.elements = document.getElementById(el.replace('#', ''));
+        else
+            this.elements = document.getElementsByTagName(el);
 
         this.instances = [];
 
@@ -17,15 +24,20 @@ class Wysiwyg {
 
         let elements = this.elements;
 
+        if(this.el.startsWith('#'))
+        {
+            this.constructEditor(elements);
+            return;
+        }
+
         if (elements.length === 0) {
+            console.error('No elements found with ' + this.el);
             return;
         }
 
         for (let item of elements) {
             this.constructEditor(item);
         }
-
-        console.log('instances', this.instances);
     }
 
     constructEditor(element) {
@@ -190,7 +202,6 @@ class Wysiwyg {
             template.addEventListener('click', function (e) {
                 e.preventDefault();
                 document.execCommand(item.exec, false, this.value);
-                console.log('clicked');
             });
         }
 
@@ -244,7 +255,7 @@ class Wysiwyg {
     }
 
     getContent() {
-        return this.instances.length === 1 ? this.instances[0].innerHTML : this.instances.map(function(value)
+        return this.instances.map(function(value)
         {
 
             let id = value.id,

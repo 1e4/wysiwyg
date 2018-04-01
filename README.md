@@ -4,13 +4,18 @@ A very tiny, highly configurable javascript WYSIWYG editor with zero dependencie
 
 ## Getting Started
 
-All you need to get started is to instantiate the WYSIWYG, it takes 1 parameter which is the class name of the 
+All you need to get started is to instantiate the WYSIWYG, it takes 1 parameter which is the selector of the 
 editable content area.
 
 JS
 
 ```javascript
-new Wysiwyg('editable');
+// You can also use it like:
+// new Wysiwyg('#anid');
+// new Wysiwyg('.aclass');
+// new Wysiwyg('atag');
+
+new Wysiwyg('.editable');
 ```
 
 HTML

@@ -20,7 +20,7 @@
     <div id="test1">This is just some simple text</div>
 </div>
 
-<div class="editable">
+<div class="editable" id="editableIdTest">
     <div id="test2">This is just another simple text area</div>
 </div>
 
@@ -43,14 +43,12 @@
 <script type="text/javascript">
     document.addEventListener('DOMContentLoaded', function () {
         // Pass in class name
-        window.currentEditors = new Wysiwyg('editable');
+        window.currentEditors = new Wysiwyg('#editableIdTest');
         let refreshButton = document.getElementById('refresh-getContent');
 
         updateContent();
 
         refreshButton.addEventListener('click', updateContent);
-
-
     });
 
     function updateContent() {
@@ -58,7 +56,6 @@
         let contents = window.currentEditors.getContent();
 
         let content = document.getElementById('getContent-demo');
-
 
         contents = JSON.stringify(contents);
 
