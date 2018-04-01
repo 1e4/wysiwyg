@@ -2,7 +2,6 @@ import {defaultConfig} from './config/config';
 
 class Wysiwyg {
     constructor(el, config) {
-
         // Merge our and their config
         this.config = Object.assign(defaultConfig, config);
 
@@ -26,7 +25,7 @@ class Wysiwyg {
             this.constructEditor(item);
         }
 
-
+        console.log('instances', this.instances);
     }
 
     constructEditor(element) {
@@ -108,8 +107,6 @@ class Wysiwyg {
                 }
 
                 let controls = this.createControl(currentItem);
-
-                console.log('controls', controls);
 
                 if (Array.isArray(controls)) {
                     for (let key in controls) {
@@ -244,6 +241,10 @@ class Wysiwyg {
 
     getInstance() {
         return this.instances;
+    }
+
+    getContent() {
+        return this.instances.length === 1 ? this.instances.innerHTML : this.instances;
     }
 };
 window.Wysiwyg = Wysiwyg;

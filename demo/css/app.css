@@ -1,1 +1,131 @@
-body.wysiwyg-single{padding-top:60px}body.wysiwyg-single div.wysiwyg-toolbar{position:absolute;top:0;left:0;width:100%}div.wysiwyg-toolbar{background-color:#eaeaea;font:13px Arial,sans-serif}div.wysiwyg-toolbar ul{margin:0;padding:0;display:inline-block}div.wysiwyg-toolbar ul a{padding:22px;display:block;color:#000}div.wysiwyg-toolbar ul>li{display:inline-block;position:relative}div.wysiwyg-toolbar ul>li:hover{background:rgba(0,0,0,.1)}div.wysiwyg-toolbar ul>li:hover ul.drop-down{z-index:5;opacity:1;display:-webkit-box;display:-ms-flexbox;display:flex}div.wysiwyg-toolbar ul>li .colorpicker-preview,div.wysiwyg-toolbar ul>li .colorpicker-preview>input{position:absolute;height:100%;width:100%;left:0;top:0}div.wysiwyg-toolbar ul>li .colorpicker-preview>input{padding:0;border:0;opacity:0}div.wysiwyg-toolbar ul>li.has-drop-down{padding:22px 60px 22px 20px}div.wysiwyg-toolbar ul>li.has-drop-down .arrow-right{position:absolute;right:30px;top:20px}div.wysiwyg-toolbar ul>li.has-drop-down:hover>ul.drop-down{display:-webkit-box;display:-ms-flexbox;display:flex;opacity:1;z-index:5}div.wysiwyg-toolbar ul>li.has-drop-down ul.drop-down{display:none;opacity:0;-webkit-transition:all .2s ease-in-out;transition:all .2s ease-in-out;z-index:-1;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;background:#eaeaea;left:0;top:100%;position:absolute;min-width:150%}div.wysiwyg-toolbar ul>li.has-drop-down ul.drop-down li{padding:10px 60px 10px 10px}div.wysiwyg-toolbar ul>li.has-drop-down ul.drop-down li:hover{background:rgba(0,0,0,.1);cursor:pointer}div.wysiwyg-toolbar li{list-style:none}div.wysiwyg-toolbar div.btn{padding:20px 10px}
+@charset "UTF-8";
+
+body.wysiwyg-single {
+  padding-top: 60px;
+}
+
+body.wysiwyg-single div.wysiwyg-toolbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+div.wysiwyg-toolbar {
+  background-color: #eaeaea;
+  font: 13px Arial, sans-serif;
+}
+
+div.wysiwyg-toolbar ul {
+  margin: 0;
+  padding: 0;
+  display: inline-block;
+}
+
+div.wysiwyg-toolbar ul > li {
+  display: inline-block;
+  position: relative;
+}
+
+div.wysiwyg-toolbar ul > li > a {
+  padding: 22px;
+  display: block;
+  color: #000;
+}
+
+div.wysiwyg-toolbar ul > li:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+div.wysiwyg-toolbar ul > li:hover ul.drop-down {
+  z-index: 5;
+  opacity: 1;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+div.wysiwyg-toolbar ul > li .colorpicker-preview {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  left: 0;
+  top: 0;
+}
+
+div.wysiwyg-toolbar ul > li .colorpicker-preview > input {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 0;
+  border: 0;
+  opacity: 0;
+}
+
+div.wysiwyg-toolbar ul > li.has-drop-down {
+  padding: 22px 40px 22px 20px;
+  position: relative;
+}
+
+div.wysiwyg-toolbar ul > li.has-drop-down::after {
+  content: "\25BC";
+  position: absolute;
+  right: 0;
+  top: 21px;
+  display: block;
+}
+
+div.wysiwyg-toolbar ul > li.has-drop-down .arrow-right {
+  position: absolute;
+  right: 30px;
+  top: 20px;
+}
+
+div.wysiwyg-toolbar ul > li.has-drop-down:hover > ul.drop-down {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  opacity: 1;
+  z-index: 5;
+}
+
+div.wysiwyg-toolbar ul > li.has-drop-down ul.drop-down {
+  display: none;
+  opacity: 0;
+  -webkit-transition: all ease-in-out 0.2s;
+  transition: all ease-in-out 0.2s;
+  z-index: -1;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  background: #eaeaea;
+  left: 0;
+  top: 100%;
+  position: absolute;
+  min-width: 150%;
+}
+
+div.wysiwyg-toolbar ul > li.has-drop-down ul.drop-down li {
+  padding: 5px 30px 5px 5px;
+}
+
+div.wysiwyg-toolbar ul > li.has-drop-down ul.drop-down li a {
+  padding: 10px;
+}
+
+div.wysiwyg-toolbar ul > li.has-drop-down ul.drop-down li:hover {
+  background: rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+div.wysiwyg-toolbar li {
+  list-style: none;
+}
+
+div.wysiwyg-toolbar div.btn {
+  padding: 20px 10px;
+}
+
