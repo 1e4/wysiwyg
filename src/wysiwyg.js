@@ -8,9 +8,9 @@ class Wysiwyg {
         this.el = el;
 
         // Get all the elements attached to this instance
-        if(el.startsWith('.'))
+        if (el.startsWith('.'))
             this.elements = document.getElementsByClassName(el.replace('.', ''));
-        else if(el.startsWith('#'))
+        else if (el.startsWith('#'))
             this.elements = document.getElementById(el.replace('#', ''));
         else
             this.elements = document.getElementsByTagName(el);
@@ -24,8 +24,7 @@ class Wysiwyg {
 
         let elements = this.elements;
 
-        if(this.el.startsWith('#'))
-        {
+        if (this.el.startsWith('#')) {
             this.constructEditor(elements);
             return;
         }
@@ -42,7 +41,30 @@ class Wysiwyg {
 
     constructEditor(element) {
 
-        let editor = element.children[0];
+        let editor = element.children[0],
+            keyLog = [],
+            keybinds = this.config.toolbar.filter(value => value.keybind !== undefined);
+
+        editor.addEventListener('keydown', function (e) {
+
+            if(keyLog[keyLog.length - 1] !== e.keyCode)
+            {
+                keyLog.push(e.keyCode);
+            }
+
+            keybinds.forEach(function (element) {
+                let keyLogJoin = keyLog.join(' ');
+
+                if (keyLogJoin === element.keybind) {
+                    e.preventDefault();
+                    document.execCommand(element.exec, false, null);
+                }
+            });
+        });
+
+        editor.addEventListener('keyup', function (e) {
+            keyLog = keyLog.filter(value => e.keyCode !== value);
+        });
 
         this.instances.push(editor);
 
@@ -176,7 +198,6 @@ class Wysiwyg {
 
             button.addEventListener('click', function (e) {
                 document.execCommand(item.exec, false, tag);
-                this.selectedIndex = 0;
             });
 
             optionHtml.append(button);
@@ -255,13 +276,12 @@ class Wysiwyg {
     }
 
     getContent() {
-        return this.instances.map(function(value)
-        {
+        return this.instances.map(function (value) {
 
             let id = value.id,
                 obj = {};
 
-            if(!id)
+            if (!id)
                 return console.error('Invalid id');
 
             obj[id] = value.innerHTML;

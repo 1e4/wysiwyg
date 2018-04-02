@@ -32,19 +32,22 @@ let defaultConfig = {
                 type: "button",
                 name: 'Bold',
                 icon: '',
-                exec: 'bold'
+                exec: 'bold',
+                keybind: '17 66'
             },
             {
                 type: "button",
                 name: 'Italic',
                 icon: '',
-                exec: 'italic'
+                exec: 'italic',
+                keybind: '17 73'
             },
             {
                 type: "button",
                 name: 'Underline',
                 icon: '',
-                exec: 'underline'
+                exec: 'underline',
+                keybind: '17 85'
             },
             {
                 type: "colorpicker",
